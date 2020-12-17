@@ -13,6 +13,7 @@ import Map from "./Map";
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
 
   useEffect(() => {
     //async->send a request
@@ -33,12 +34,22 @@ function App() {
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value;
-    console.log("hey", countryCode);
 
-    setCountry(countryCode);
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setCountry(countryCode); //update the input
+        setCountryInfo(data); //All the data form the country response/store the response
+      });
   };
 
-  //https://disease.sh/v3/covid_19/countries
+  console.log("hey its Arbiona", countryInfo);
+
   return (
     <div className="app">
       <div className="app__left">
@@ -55,7 +66,7 @@ function App() {
               <MenuItem value="worldwide">Worldwide</MenuItem>
 
               {countries.map((country) => (
-                <MenuItem value={country.value}>{country.name}</MenuItem>
+                <MenuItem>{country.name}</MenuItem>
               ))}
             </Select>
           </FormControl>
