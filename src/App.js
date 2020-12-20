@@ -11,9 +11,10 @@ import {
 import Map from "./Map";
 
 function App() {
+  const [country, setCountry] = useState("worldwide");
   const [countries, setCountries] = useState([]);
   const [countryInfo, setCountryInfo] = useState({});
-  const [country, setCountry] = useState("worldwide");
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -33,6 +34,7 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
           }));
+          setTableData(data);
           setCountries(countries);
         });
     };
@@ -69,7 +71,6 @@ function App() {
               {/* Loop through alll the countries
             and show a drop down list of option */}
               <MenuItem value="worldwide">Worldwide</MenuItem>
-
               {countries.map((country) => (
                 <MenuItem key={country.name}>{country.name}</MenuItem>
               ))}
@@ -99,7 +100,7 @@ function App() {
       <Card className="app__right">
         <CardContent>
           <h3>live cases by country</h3>
-          {/* Table */}
+          <Table countries={tableData} />
           <h3>worldwide new cases</h3>
           {/* Graph */}
         </CardContent>
