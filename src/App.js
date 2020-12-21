@@ -9,6 +9,7 @@ import {
   CardContent,
 } from "@material-ui/core";
 import Map from "./Map";
+import Table from "./Table";
 
 function App() {
   const [country, setCountry] = useState("worldwide");
