@@ -47,7 +47,7 @@ const options = {
   },
 };
 
-const buildChartData = (data, casesType = "cases") => {
+const buildChartData = (data, casesType) => {
   const chartData = [];
   let lastDataPoint;
   for (let date in data.cases) {
@@ -63,7 +63,7 @@ const buildChartData = (data, casesType = "cases") => {
   return chartData;
 };
 
-function LineGraph() {
+function LineGraph({ casesType }) {
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -76,7 +76,7 @@ function LineGraph() {
         });
     };
     fetchData();
-  }, []);
+  }, [casesType]);
 
   return (
     <div>
@@ -87,7 +87,7 @@ function LineGraph() {
           data={{
             datasets: [{ data: data }],
             backgroundColor: "rgba(204, 16, 52, 0.5)",
-            borderColor: "#CC1034",
+            borderColor: "#F78511",
           }}
           options={options}
         />
