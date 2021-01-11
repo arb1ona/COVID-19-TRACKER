@@ -37,6 +37,12 @@ export const sortData = (data) => {
   //   });
   //return sortedData;
 };
+
+// if that stat exist give me back the following + and format it
+// if it doesn't exist give me +0
+export const prettyPrintStat = (stat) =>
+  stat ? `+${numeral(stat).format("0.0a")}` : "+0";
+
 // DRAW CIRCLES on the map with interactive tooltip
 export const showDataOnMap = (data, casesType = "cases") =>
   data.map((country) => (
